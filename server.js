@@ -15,7 +15,14 @@ const url = process.env.MONGO_URL;
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://zerodha-dashboard.onrender.com"
+  ],
+  credentials: true
+}));
 
 app.use(bodyParser.json());
 app.use(cookieParser());
