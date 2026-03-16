@@ -19,7 +19,7 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:3001",
-    "https://zerodha-dashboard.onrender.com"
+    "https://zerodha-dashboard-fb5x.onrender.com"
   ],
   credentials: true
 }));
