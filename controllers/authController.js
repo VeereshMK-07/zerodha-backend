@@ -29,9 +29,9 @@ exports.sendOtp = async (req, res) => {
     res.json({ message: "OTP sent successfully" });
 
   } catch (err) {
-    console.error("SEND OTP ERROR:", err);
-    res.status(500).json({ message: "Server error" });
-  }
+  console.error("OTP ERROR:", err);
+  res.status(500).json({ message: err.message });
+}
 };
 
 exports.verifyOtp = async (req, res) => {
