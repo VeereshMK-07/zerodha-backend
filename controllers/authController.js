@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 
 exports.sendOtp = async (req, res) => {
   try {
-
     const { phone } = req.body;
 
     if (!phone) {
@@ -27,11 +26,10 @@ exports.sendOtp = async (req, res) => {
     console.log("OTP for testing:", otp);
 
     res.json({ message: "OTP sent successfully" });
-
   } catch (err) {
-  console.error("OTP ERROR:", err);
-  res.status(500).json({ message: err.message });
-}
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
 };
 
 exports.verifyOtp = async (req, res) => {
