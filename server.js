@@ -27,6 +27,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.set("trust proxy", 1);
 
 //this route is for adding or sending the holdings data to the database but this is only one time temporary//
 

@@ -48,8 +48,8 @@ exports.verifyOtp = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true, //  MUST for HTTPS (Render)
+      sameSite: "None", //  MUST for cross-origin
     });
 
     res.json({ message: "Login successful" });
@@ -60,6 +60,10 @@ exports.verifyOtp = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
   res.json({ message: "Logged out" });
 };
