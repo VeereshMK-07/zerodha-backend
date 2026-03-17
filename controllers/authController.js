@@ -43,26 +43,24 @@ exports.verifyOtp = async (req, res) => {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true, //  MUST for HTTPS (Render)
-      sameSite: "None", //  MUST for cross-origin
-      path : "/",
-    });
+    // 🔥 IMPORTANT: RETURN RESPONSE WITH HEADER
+    return res
+      .status(200)
+      .header(
+        "Set-Cookie",
+        `token=${token}; HttpOnly; Secure; SameSite=None; Path=/`
+      )
+      .json({ message: "Login successful" });
 
-    res.setHeader(
-  "Set-Cookie",
-  `token=${token}; HttpOnly; Secure; SameSite=None; Path=/`
-);
-
-    res.json({ message: "Login successful" });
   } catch (err) {
-    console.error("SEND OTP ERROR:", err);
-    res.status(500).json({ message: "Server error" });
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
