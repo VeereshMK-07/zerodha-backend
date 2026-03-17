@@ -14,20 +14,16 @@ const PORT = process.env.PORT || 3002;
 const url = process.env.MONGO_URL;
 
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "https://zerodha-dashboard-fb5x.onrender.com",
-    "https://zerodha-frontend-dzxz.onrender.com"
-  ],
+  origin: "https://zerodha-frontend-dzxz.onrender.com",
   credentials: true
 }));
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.set("trust proxy", 1);
+
 
 //this route is for adding or sending the holdings data to the database but this is only one time temporary//
 

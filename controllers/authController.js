@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { patch } = require("../routes/authRoutes");
 
 exports.sendOtp = async (req, res) => {
   try {
@@ -50,7 +51,13 @@ exports.verifyOtp = async (req, res) => {
       httpOnly: true,
       secure: true, //  MUST for HTTPS (Render)
       sameSite: "None", //  MUST for cross-origin
+      path : "/",
     });
+
+    res.setHeader(
+  "Set-Cookie",
+  `token=${token}; HttpOnly; Secure; SameSite=None; Path=/`
+);
 
     res.json({ message: "Login successful" });
   } catch (err) {
