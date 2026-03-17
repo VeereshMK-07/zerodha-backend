@@ -49,14 +49,18 @@ exports.verifyOtp = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    // 🔥 IMPORTANT: RETURN RESPONSE WITH HEADER
-    return res
-      .status(200)
-      .header(
-        "Set-Cookie",
-        `token=${token}; HttpOnly; Secure; SameSite=None; Path=/`
-      )
-      .json({ message: "Login successful" });
+    console.log("TOKEN GENERATED:", token);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      path: "/",
+    });
+
+    console.log("COOKIE SET");
+
+    return res.status(200).json({ message: "Login successful" });
 
   } catch (err) {
     console.error(err);

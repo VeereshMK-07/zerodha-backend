@@ -18,10 +18,11 @@ app.set("trust proxy", 1);
 
 app.use(cors({
   origin: "https://zerodha-frontend-dzxz.onrender.com",
-  credentials: true
+  credentials: true,
 }));
 
-app.use(bodyParser.json());
+app.use(express.json());
+// app.use(bodyParser.json());//
 app.use(cookieParser());
 
 
