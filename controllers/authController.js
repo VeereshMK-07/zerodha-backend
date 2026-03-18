@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const { patch } = require("../routes/authRoutes");
 
 exports.sendOtp = async (req, res) => {
   try {
@@ -43,20 +42,18 @@ exports.verifyOtp = async (req, res) => {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: user._id, phone: user.phone },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" },
+    );
 
     console.log("TOKEN GENERATED:", token);
 
-    res.json({
+    return res.json({
       message: "Login successful",
       token,
     });
-
-    console.log("COOKIE SET");
-
-    return res.status(200).json({ message: "Login successful" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
