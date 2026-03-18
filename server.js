@@ -18,12 +18,10 @@ app.set("trust proxy", 1);
 
 app.use(cors({
   origin: "https://zerodha-frontend-dzxz.onrender.com",
-  credentials: true,
 }));
 
 app.use(express.json());
 // app.use(bodyParser.json());//
-app.use(cookieParser());
 
 
 //this route is for adding or sending the holdings data to the database but this is only one time temporary//
