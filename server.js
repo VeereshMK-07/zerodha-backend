@@ -17,7 +17,9 @@ const app = express();
 app.set("trust proxy", 1);
 
 app.use(cors({
-  origin: "https://zerodha-frontend-dzxz.onrender.com",
+  origin:[ "https://zerodha-frontend-dzxz.onrender.com",
+          "https://zerodha-dashboard-fb5x.onrender.com"
+  ],
 }));
 
 app.use(express.json());
