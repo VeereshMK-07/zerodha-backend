@@ -4,7 +4,9 @@ const { sendOtp, verifyOtp, logout } = require("../controllers/authController");
 
 router.post("/send-otp", sendOtp);
 router.post("/verify-otp", verifyOtp);
+router.get("/verify", verifyUser);
 router.post("/logout", logout);
+
 
 
 
@@ -15,6 +17,6 @@ router.get("/check-auth", (req, res) => {
   return res.status(401).json({ success: false });
 });
 
-router.get("/verify", verifyUser);
+
 
 module.exports = router;
