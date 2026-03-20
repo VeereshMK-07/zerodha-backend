@@ -20,6 +20,7 @@ app.use(cors({
   origin:[ "https://zerodha-frontend-dzxz.onrender.com",
           "https://zerodha-dashboard-fb5x.onrender.com"
   ],
+  credentials: true,
 }));
 
 app.use(express.json());
