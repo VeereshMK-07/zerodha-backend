@@ -15,4 +15,6 @@ router.get("/check-auth", (req, res) => {
   return res.status(401).json({ success: false });
 });
 
+router.get("/verify", verifyUser);
+
 module.exports = router;

@@ -16,16 +16,18 @@ const url = process.env.MONGO_URL;
 const app = express();
 app.set("trust proxy", 1);
 
-app.use(cors({
-  origin:[ "https://zerodha-frontend-dzxz.onrender.com",
-          "https://zerodha-dashboard-fb5x.onrender.com"
-  ],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      "https://zerodha-frontend-dzxz.onrender.com",
+      "https://zerodha-dashboard-fb5x.onrender.com",
+    ],
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 // app.use(bodyParser.json());//
-
 
 //this route is for adding or sending the holdings data to the database but this is only one time temporary//
 
@@ -223,7 +225,8 @@ app.post("/newOrder", async (req, res) => {
   res.send("Order saved!");
 });
 
-mongoose.connect(url)
+mongoose
+  .connect(url)
   .then(() => console.log("DB Connected Successfully!"))
   .catch((err) => console.log(err));
 
