@@ -53,13 +53,13 @@ exports.verifyOtp = async (req, res) => {
     return res.json({
       message: "Login successful",
       token,
+      isNewUSer: !user.name,
     });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
   }
 };
-
 
 exports.verifyUser = (req, res) => {
   try {
@@ -77,6 +77,25 @@ exports.verifyUser = (req, res) => {
     });
   } catch (err) {
     return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+
+exports.saveName = async (req, res) => {
+  try {
+    const { name } = req.body;
+
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id);
+
+    user.name = name;
+    await user.save();
+
+    res.json({ message: "Name saved" });
+  } catch (err) {
+    res.status(500).json({ message: "Error saving name" });
   }
 };
 
