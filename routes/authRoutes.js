@@ -4,7 +4,7 @@ const { sendOtp, verifyOtp, verifyUser, logout, saveName } = require("../control
 
 router.post("/send-otp", sendOtp);
 router.post("/verify-otp", verifyOtp);
-router.get("/verify-user", verifyUser);
+router.get("/verify", verifyUser);
 router.post("/save-name", saveName);
 router.post("/logout", logout);
 
