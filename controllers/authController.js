@@ -53,7 +53,7 @@ exports.verifyOtp = async (req, res) => {
     return res.json({
       message: "Login successful",
       token,
-      isNewUSer: !user.name,
+      isNewUser: !user.name || user.name === "",
     });
   } catch (err) {
     console.error(err);
