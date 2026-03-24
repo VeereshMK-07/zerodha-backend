@@ -45,10 +45,8 @@ exports.verifyOtp = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, phone: user.phone },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" },
+      { expiresIn: "7d" }
     );
-
-    console.log("TOKEN GENERATED:", token);
 
     return res.json({
       message: "Login successful",
@@ -61,7 +59,7 @@ exports.verifyOtp = async (req, res) => {
   }
 };
 
-exports.verifyUser = (req, res) => {
+exports.verifyUser = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
@@ -71,15 +69,19 @@ exports.verifyUser = (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    const user = await User.findById(decoded.id);
+
     res.json({
       valid: true,
-      user: decoded,
+      user: {
+        phone: user.phone,
+        name: user.name,
+      },
     });
   } catch (err) {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
-
 
 exports.saveName = async (req, res) => {
   try {
