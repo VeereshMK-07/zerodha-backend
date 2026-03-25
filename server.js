@@ -204,12 +204,12 @@ app.use("/api/auth", require("./routes/authRoutes"));
 
 app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
-  res.json(allHoldings);
+  res.json([]);
 });
 
 app.get("/allPositions", async (req, res) => {
   let allPositions = await PositionsModel.find({});
-  res.json(allPositions);
+  res.json([]);
 });
 
 app.post("/newOrder", async (req, res) => {
