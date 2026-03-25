@@ -204,7 +204,7 @@ app.use("/api/auth", require("./routes/authRoutes"));
 
 app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
-  res.json([allHoldings]);
+  res.json(allHoldings);
 });
 
 app.get("/allPositions", async (req, res) => {
