@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
+// ================= SEND OTP =================
 exports.sendOtp = async (req, res) => {
   try {
     const { phone } = req.body;
@@ -32,6 +33,7 @@ exports.sendOtp = async (req, res) => {
   }
 };
 
+// ================= VERIFY OTP =================
 exports.verifyOtp = async (req, res) => {
   try {
     const { phone, otp } = req.body;
@@ -59,6 +61,7 @@ exports.verifyOtp = async (req, res) => {
   }
 };
 
+// ================= VERIFY USER =================
 exports.verifyUser = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
@@ -69,11 +72,13 @@ exports.verifyUser = async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    //  fetch full user
     const user = await User.findById(decoded.id);
 
     res.json({
       valid: true,
       user: {
+        id: user._id,
         phone: user.phone,
         name: user.name,
       },
@@ -83,9 +88,14 @@ exports.verifyUser = async (req, res) => {
   }
 };
 
+// ================= SAVE NAME =================
 exports.saveName = async (req, res) => {
   try {
     const { name } = req.body;
+
+    if (!name || name.trim() === "") {
+      return res.status(400).json({ message: "Name is required" });
+    }
 
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -95,12 +105,13 @@ exports.saveName = async (req, res) => {
     user.name = name;
     await user.save();
 
-    res.json({ message: "Name saved" });
+    res.json({ message: "Name saved successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error saving name" });
   }
 };
 
+// ================= LOGOUT =================
 exports.logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
